@@ -42,7 +42,8 @@ if mode is None:
 		show_title = common.parseDOM(link_element, "a")
 
 		#Skip those we know is not working
-		if show_url == 'http://dom2.tnt-online.ru/' or show_url == 'http://zkd.tnt-online.ru/':
+		skipped_links = ['http://dom2.tnt-online.ru/', 'http://zkd.tnt-online.ru/', 'http://otkritii-pokaz.tnt-online.ru/', 'http://sladkaya-jizn.tnt-online.ru/', 'http://dom2.ru/']
+		if show_url[0] in skipped_links:
 			continue
 
 		url = build_url({'mode': 'show', 'url': show_url[-1]})
