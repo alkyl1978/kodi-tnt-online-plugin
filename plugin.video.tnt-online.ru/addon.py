@@ -33,21 +33,22 @@ def build_url(query):
 mode = args.get('mode', None)
 
 if mode is None:
-	result = getPage('http://tnt-online.ru')
-	program_div = common.parseDOM(result, "div", attrs = { 'id': 'programm' })
-	show_link_elements = common.parseDOM(program_div[0], "div")
-	
+	result = getPage('http://tnt-online.ru/programs.htm')
+	program_div = common.parseDOM(result, "div", attrs = { 'id': 'all-videos' })
+	show_link_elements = common.parseDOM(program_div[0], "b")
+
 	for link_element in show_link_elements:
 		show_url = common.parseDOM(link_element, "a", ret = 'href')
 		show_title = common.parseDOM(link_element, "a")
 
 		#Skip those we know is not working
-		skipped_links = ['http://dom2.tnt-online.ru/', 'http://zkd.tnt-online.ru/', 'http://otkritii-pokaz.tnt-online.ru/', 'http://sladkaya-jizn.tnt-online.ru/', 'http://dom2.ru/']
+		skipped_links = ['http://dom2.tnt-online.ru/', 'http://zkd.tnt-online.ru/', 'http://otkritii-pokaz.tnt-online.ru/', 'http://sladkaya-jizn.tnt-online.ru/', 'http://dom2.ru/', 'http://tnt-comedy.tnt-online.ru/', 'http://tnt-online.ru/kino/']
 		if show_url[0] in skipped_links:
 			continue
 
 		url = build_url({'mode': 'show', 'url': show_url[-1]})
-		li = xbmcgui.ListItem(show_title[-1].encode('utf-8'), iconImage='DefaultFolder.png')
+		li = xbmcgui.ListItem(show_title[0].encode('utf-8'), iconImage='DefaultFolder.png')
+		#li = xbmcgui.ListItem(show_title[-1].encode('utf-8'), iconImage='DefaultFolder.png')
 		xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 		
 
@@ -64,6 +65,11 @@ elif mode[0] == 'show':
 	debugMsg('Base url: ' + str(show_base_url))
 
 	if show_page == 0:
+		#Fix for when Lazy russian programmers have missed the whole URL!
+		#i.e /Dva-s-polovinoy-povara
+		if show_url.startswith('/'):
+			show_url = 'http://tnt-online.ru' + show_url
+
 		result = getPage(show_url)
 		show_base_url = show_url
 
