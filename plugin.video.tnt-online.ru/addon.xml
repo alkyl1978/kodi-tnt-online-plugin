@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.tnt" name="TNT-Online.ru" version="0.5" provider-name="tomplast">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.parsedom" version="0.9.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Plugin for viewing videos from tnt-online.ru</summary>
+    <description lang="en">Plugin for viewing video from tnt-online.ru</description>
+    <disclaimer lang="en">If your computer blows up, it's not my fault ;)</disclaimer>
+    <language>ru</language>
+    <platform>all</platform>
+    <license>MIT</license>
+    <forum></forum>
+    <website></website>
+    <email>tomplast@gmail.com</email>
+    <source>https://github.com/tomplast/kodi-tnt-online-plugin</source>
+  </extension>
+</addon>
